@@ -1,9 +1,12 @@
+variables:
+  VERSION_TAG: "sb-3.1.3"
+
 stages:
   - package
   - build
 
 job_package:
-  image: maven:3.6-jdk-11
+  image: maven:3.8.3-openjdk-17
   stage: package
   script:
     - mvn package
@@ -23,8 +26,8 @@ job_build:
     - ls -a .
     - ls -a ./target/ 
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:latest -f ./Dockerfile .
-    - docker push $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:latest 
+    - docker build -t $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:$VERSION_TAG -f ./Dockerfile .
+    - docker push $CI_REGISTRY/js-asi2/asi2-backendmarket-monolithic-student/asi2-backendmarket-monolithic-student:$VERSION_TAG
     
   only:
     - master
