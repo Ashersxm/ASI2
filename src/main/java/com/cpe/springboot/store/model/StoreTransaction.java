@@ -2,10 +2,10 @@ package com.cpe.springboot.store.model;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class StoreTransaction {
@@ -15,6 +15,9 @@ public class StoreTransaction {
 	private Integer id;
 	private Integer userId;
 	private Integer cardId;
+	private Integer storeId;
+
+	private float amount;
 	private StoreAction action;
     private java.sql.Timestamp timeSt;
 	
@@ -22,10 +25,12 @@ public class StoreTransaction {
 		this.timeSt=new Timestamp(System.currentTimeMillis());
 	}
 
-	public StoreTransaction( Integer userId, Integer cardId, StoreAction action) {
+	public StoreTransaction( Integer userId, Integer cardId,Integer storeId,float amount, StoreAction action) {
 		super();
 		this.userId = userId;
 		this.cardId = cardId;
+		this.storeId = storeId;
+		this.amount = amount;
 		this.action = action;
 		this.timeSt=new Timestamp(System.currentTimeMillis());
 	}
@@ -69,7 +74,20 @@ public class StoreTransaction {
 	public void setTimeSt(java.sql.Timestamp sqlTimestamp) {
 		this.timeSt = sqlTimestamp;
 	}
-	
-	
-	
+
+	public Integer getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
+
+	public float getAmount() {
+		return amount;
+	}
+
+	public void setAmount(float amount) {
+		this.amount = amount;
+	}
 }

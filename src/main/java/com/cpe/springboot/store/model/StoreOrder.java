@@ -3,6 +3,8 @@ package com.cpe.springboot.store.model;
 public class StoreOrder {
 	private int user_id;
 	private int card_id;
+
+	private int store_id;
 	
 	public StoreOrder() {
 	}
@@ -22,7 +24,12 @@ public class StoreOrder {
 	public void setCard_id(int card_id) {
 		this.card_id = card_id;
 	}
-	
-	
 
+	public int getStore_id() {
+		return store_id;
+	}
+
+	public void setStore_id(int store_id) {
+		this.store_id = store_id;
+	}
 }
