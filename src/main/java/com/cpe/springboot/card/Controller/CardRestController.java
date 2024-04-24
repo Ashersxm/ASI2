@@ -66,15 +66,5 @@ public class CardRestController {
 		cardModelService.deleteCardModel(Integer.valueOf(id));
 	}
 
-	@RequestMapping(method=RequestMethod.GET, value="/cards_to_sell")
-	private List<CardDTO> getCardsToSell() {
-		List<CardDTO> list=new ArrayList<>();
-		for( CardModel c : cardModelService.getAllCardToSell()){
-			CardDTO cLight=new CardDTO(c);
-			list.add(cLight);
-		}
-		return list;
-
-	}
 	
 }

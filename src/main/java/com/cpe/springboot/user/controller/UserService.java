@@ -40,12 +40,12 @@ public class UserService {
 	public UserDTO addUser(UserDTO user) {
 		UserModel u = fromUDtoToUModel(user);
 		// needed to avoid detached entity passed to persist error
-		userRepository.save(u);
+		UserModel u_saved=userRepository.save(u);
 		List<CardModel> cardList = cardModelService.getRandCard(5);
 		for (CardModel card : cardList) {
 			u.addCard(card);
 		}
-		UserModel uBd = userRepository.save(u);
+		UserModel uBd = userRepository.save(u_saved);
 		return DTOMapper.fromUserModelToUserDTO(uBd);
 	}
 
