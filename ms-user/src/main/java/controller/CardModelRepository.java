@@ -1,4 +1,4 @@
-package java.controller;
+package main.java.controller;
 
 import com.cpe.springboot.user.model.UserModel;
 import org.springframework.data.repository.CrudRepository;
