@@ -6,8 +6,8 @@ Projet de Développement Web
 Membres du Groupe
 -----------------
 
--   **Noé JOBARD **  
--   **Brandon Hunt **  
+-   **Noé JOBARD**  
+-   **Brandon Hunt**  
 -   **Julien Buc**  
 -   **Rémi LOUEDEC**  
 
@@ -45,10 +45,10 @@ Liste des Éléments Réalisés
 
 -   **MS AUTH & MS USER** : Réalisés et testés.
 -   **Frontend** : Réalisés sans intéractions avec le backend.
+-   **MS ImageGeneration & MS PropertyGeneration** : Réalisés et testés.
 
 Liste des Éléments Non-réalisés
 -------------------------------
 
--   **MS ImageGeneration & MS PropertyGeneration** : Réalisés mais à tester.
 -   **MS Notification** : Réalisé mais à tester avec ESB
 -   **ESB** : En cours
