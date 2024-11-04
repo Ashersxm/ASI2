@@ -1,14 +1,21 @@
 // src/pages/index.js
 import React from 'react';
-import Home from './Home.jsx';  // Votre page d'accueil
-import store from '../app/store.js'; // Vérifiez que le chemin est correct
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './Home.jsx';  // Your home page
+import LoginUser from './forms/loginUser.jsx'; // Example additional page
+import store from '../app/store.js'; // Ensure this path is correct
 import { Provider } from 'react-redux';
 
 function Index() {
-
   return (
     <Provider store={store}>
-      <Home />
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/loginUser" component={LoginUser} /> {/* Example of another route */}
+          {/* Add more routes here as needed */}
+        </Switch>
+      </Router>
     </Provider>
   );
 }

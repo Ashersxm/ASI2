@@ -12,7 +12,6 @@ export const userSlice = createSlice({
 
   reducers: {
     addUser: (state, action) => {
-      console.log('in')
       state.users = [...state.users, {id: nextId, name: action.payload.name}]
       nextId += 1
     },
