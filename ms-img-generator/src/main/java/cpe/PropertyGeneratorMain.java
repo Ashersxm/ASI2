@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class ImgGeneratorMain {
+public class PropertyGeneratorMain {
     public static void main(String[] args) {
-        SpringApplication.run(ImgGeneratorMain.class, args);
+        SpringApplication.run(PropertyGeneratorMain.class, args);
     }
 
     @Bean
