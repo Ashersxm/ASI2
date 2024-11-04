@@ -1,11 +1,11 @@
 package cpe.model;
 
-public class ImageRequest {
+public class PropertyRequest {
     private String promptTxt;
     private String negativePromptTxt;
 
     // Constructors, getters, and setters
-    public ImageRequest(String promptTxt, String negativePromptTxt) {
+    public PropertyRequest(String promptTxt, String negativePromptTxt) {
         this.promptTxt = promptTxt;
         this.negativePromptTxt = negativePromptTxt;
     }
