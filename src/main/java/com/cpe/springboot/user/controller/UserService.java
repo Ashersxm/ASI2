@@ -4,11 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import com.cpe.springboot.card.Controller.CardModelService;
 import com.cpe.springboot.card.model.CardModel;
 import com.cpe.springboot.common.tools.DTOMapper;
+import com.cpe.springboot.user.model.AuthDTO;
 import com.cpe.springboot.user.model.UserDTO;
 import com.cpe.springboot.user.model.UserModel;
 
@@ -17,6 +26,12 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final CardModelService cardModelService;
+
+	@Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${auth.service.url}")
+    private String authServiceUrl;
 
 	public UserService(UserRepository userRepository, CardModelService cardModelService) {
 		this.userRepository = userRepository;
@@ -82,4 +97,21 @@ public class UserService {
 		return u;
 	}
 
+	public Integer authenticate(AuthDTO authDTO) {
+		try {
+			// Envoyer la requête POST à l'API d'authentification
+			ResponseEntity<Integer> response = restTemplate.postForEntity(authServiceUrl, authDTO, Integer.class);
+
+			// Si l'authentification réussit, retourner l'utilisateur
+			if (response.getStatusCode() == HttpStatus.OK) {
+				return response.getBody();
+			} else {
+				throw new RuntimeException("Authentication failed with status: " + response.getStatusCode());
+			}
+		} catch (HttpClientErrorException e) {
+			throw new RuntimeException("Error during authentication: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
+		} catch (Exception e) {
+			throw new RuntimeException("Unexpected error during authentication: " + e.getMessage());
+		}
+	}
 }

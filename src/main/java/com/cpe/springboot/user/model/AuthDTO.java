@@ -1,26 +1,31 @@
 package com.cpe.springboot.user.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AuthDTO {
-	private String username;
-	private String password;
+    @JsonProperty("login")
+    private String login;
+
+    @JsonProperty("pwd")
+    private String pwd;
 	
 	public AuthDTO() {
 	}
 
-	public String getUsername() {
-		return username;
+	public String getlogin() {
+		return login;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setlogin(String login) {
+		this.login = login;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPwd() {
+		return pwd;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 	
 }
