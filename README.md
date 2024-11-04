@@ -6,11 +6,11 @@ Projet de Développement Web
 Membres du Groupe
 -----------------
 
--   **Noé JOBARD **  (Frontend)
--   **Brandon Hunt **  (MS Image + Properties)
--   **Julien Buc**  (MS Notification + ESB)
--   **Rémi LOUEDEC**  (MS Auth + User)
--   
+-   **Noé JOBARD **  
+-   **Brandon Hunt **  
+-   **Julien Buc**  
+-   **Rémi LOUEDEC**  
+
 Activités Réalisées Lors des Séances (par personne)
 ---------------------------------------------------
 
