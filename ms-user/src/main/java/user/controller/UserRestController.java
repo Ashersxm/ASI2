@@ -1,22 +1,17 @@
-package com.cpe.springboot.user.controller;
+package main.java.user.controller;
+
+import com.cpe.springboot.common.tools.DTOMapper;
+import com.cpe.springboot.user.controller.UserService;
+import com.cpe.springboot.user.model.AuthDTO;
+import com.cpe.springboot.user.model.UserDTO;
+import com.cpe.springboot.user.model.UserModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import com.cpe.springboot.common.tools.DTOMapper;
-import com.cpe.springboot.user.model.AuthDTO;
-import com.cpe.springboot.user.model.UserDTO;
-import com.cpe.springboot.user.model.UserModel;
 
 //ONLY FOR TEST NEED ALSO TO ALLOW CROOS ORIGIN ON WEB BROWSER SIDE
 @CrossOrigin
@@ -68,6 +63,14 @@ public class UserRestController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/auth")
 	private Integer getAllCourses(@RequestBody AuthDTO authDto) {
-		return userService.authenticate(authDto);
+		 List<UserModel> uList = userService.getUserByLoginPwd(authDto.getUsername(),authDto.getPassword());
+		if( uList.size() > 0) {
+			
+			return uList.get(0).getId();
+		}
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Authentification Failed",null);
+
 	}
+	
+
 }
