@@ -1,28 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit';
+// src/app/userSlice.js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialState = {
-  users: [
-    {id: 1, name: 'REMIXXXX'},
-]
-};
+export const loginUser = createAsyncThunk('user/loginUser', async (credentials) => {
+  const response = await axios.post('http://localhost:8083/auth', credentials);
+  return response.data; // Assuming the response contains the user data and token
+});
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
-  initialState,
-
+  initialState: {
+    users: [],
+    isAuthenticated: false,
+    token: null,
+    error: null,
+  },
   reducers: {
-    addUser: (state, action) => {
-      state.users = [...state.users, {id: nextId, name: action.payload.name}]
-      nextId += 1
+    logoutUser: (state) => {
+      state.isAuthenticated = false;
+      state.token = null;
+      localStorage.removeItem('token'); // Remove token from local storage
     },
-    removeUser: (state, action) => {
-      state.users = state.users.filter(user => user.id !== action.payload.id)
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.token = action.payload.token; // Assuming the token is returned in the payload
+        localStorage.setItem('token', action.payload.token); // Save token to local storage
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isAuthenticated = false;
+        state.error = action.error.message;
+      });
   },
 });
 
-export const { addUser, removeUser } = userSlice.actions;
-
+export const { logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;
-
