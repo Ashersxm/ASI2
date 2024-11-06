@@ -1,31 +1,54 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import CardMarket from './Market/CardMarket';
-
-const sellCards = [
-  { name: 'Dragon', description: 'A powerful fire dragon', family_name: 'Fire', hp: 100, energy: 50, defense: 30, attack: 40, offer: 120 },
-  { name: 'Phoenix', description: 'A mythical bird', family_name: 'Fire', hp: 120, energy: 60, defense: 40, attack: 50, offer: 180 }
-];
+import { fetchCards, sellCard } from '../../app/cardSlice';
 
 const SellPage = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
+
   const user = useSelector((state) => state.user.user);
+  const { items: allCards, loading, error } = useSelector((state) => state.cards);
+
+  const [userCards, setUserCards] = useState([]);
 
   useEffect(() => {
-    console.log("USERRR",user)
     if (!user) {
       router.push('/forms/loginUser');
+    } else {
+      dispatch(fetchCards());  // Fetch all cards when the user is authenticated
     }
-  }, [user, router]);
+  }, [user, router, dispatch]);
+
+  useEffect(() => {
+    if (user && allCards.length > 0) {
+      // Filter cards that belong to the user
+      const filteredCards = allCards.filter(card => user.cardList.includes(card.id));
+      setUserCards(filteredCards);  // Store the filtered cards
+    }
+  }, [user, allCards]);
+
+  const handleSell = (card_id) => {
+    console.log(card_id, user.id)
+    // Dispatch the sellCard action with the cardId and userId
+    dispatch(sellCard({ card_id, user_id: user.id,store_id :0 }));
+  };
 
   if (!user) {
     return <p>Loading...</p>;
   }
 
+  if (loading) return <p>Loading cards...</p>;
+  if (error) return <p>Error loading cards: {error}</p>;
+
   return (
     <div>
-      <CardMarket type="sell" cards={sellCards} />
+      <CardMarket
+        type="sell"
+        cards={userCards}
+        action={handleSell}  // Pass handleSell function to CardMarket
+      />
     </div>
   );
 };

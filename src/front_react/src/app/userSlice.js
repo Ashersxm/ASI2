@@ -1,11 +1,14 @@
-// src/app/userSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Thunk for logging in the user
-export const loginUser = createAsyncThunk('user/loginUser', async (credentials) => {
+export const loginUser = createAsyncThunk('user/loginUser', async (credentials, { dispatch }) => {
   const response = await axios.post('http://localhost:8083/auth', credentials);
-  return response.data; // Assuming the response contains the user data and token
+  const { token, userId } = response.data;
+  
+
+  
+  return { token, userId }; // Returning the token and userId for localStorage and state management
 });
 
 // Thunk for registering a new user
@@ -54,6 +57,7 @@ const userSlice = createSlice({
         const { token, userId } = action.payload;
         state.token = token;
         state.userId = userId;
+        fetchUserDetails(userId);
         localStorage.setItem('token', token);
         localStorage.setItem('userId', userId);
       })
