@@ -10,7 +10,7 @@ const sellCards = [
 
 const SellPage = () => {
   const router = useRouter();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     console.log("USERRR",user)
@@ -25,7 +25,6 @@ const SellPage = () => {
 
   return (
     <div>
-      <h1>Welcome to the Sell Page!</h1>
       <CardMarket type="sell" cards={sellCards} />
     </div>
   );

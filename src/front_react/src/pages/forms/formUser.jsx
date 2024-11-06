@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, TextField, Button, Checkbox, FormControlLabel, Container, Grid2, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, TextField, Button, Checkbox, FormControlLabel, Container, Box } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../app/userSlice'; // Adjust the import based on your file structure
 import Header from '../Header';
@@ -7,10 +7,10 @@ import Header from '../Header';
 const FormUser = () => {
   const dispatch = useDispatch();
   const [termsChecked, setTermsChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   
-  // State for form fields
   const [formData, setFormData] = useState({
-    login: '',         // Added login field
+    login: '',
     surName: '',
     lastName: '',
     pwd: '',
@@ -32,21 +32,27 @@ const FormUser = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (termsChecked && formData.pwd === formData.rePwd) {
-      // Dispatch registration action with form data
-      dispatch(registerUser(formData));
-      console.log('Form submitted!', formData);
-    } else {
-      console.log('Please check your inputs.');
+    if (formData.pwd !== formData.rePwd) {
+      setErrorMessage('Passwords do not match.');
+      return;
     }
+    if (!termsChecked) {
+      setErrorMessage('Please agree to the terms and conditions.');
+      return;
+    }
+
+    // Clear error message and dispatch registration action
+    setErrorMessage('');
+    dispatch(registerUser(formData));
+    console.log('Form submitted!', formData);
   };
 
   return (
     <div>
       <Header />
       <Container>
-        <Grid2 container justifyContent="center" sx={{ mt: 4 }}>
-          <Grid2 item xs={12} sm={8} md={6}>
+        <Box display="flex" justifyContent="center" sx={{ mt: 4 }}>
+          <Box sx={{ width: '100%', maxWidth: 500 }}>
             <form onSubmit={handleSubmit}>
               <Box mb={2}>
                 <TextField
@@ -54,8 +60,8 @@ const FormUser = () => {
                   variant="outlined"
                   fullWidth
                   required
-                  name="login" // Name updated to match state
-                  value={formData.login} // Updated to match state
+                  name="login"
+                  value={formData.login}
                   onChange={handleInputChange}
                   placeholder="Login"
                 />
@@ -67,7 +73,7 @@ const FormUser = () => {
                   fullWidth
                   required
                   name="surName"
-                  value={formData.surName} // Updated to match state
+                  value={formData.surName}
                   onChange={handleInputChange}
                   placeholder="Surname"
                 />
@@ -94,6 +100,7 @@ const FormUser = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Your Email"
+                  type="email"
                 />
               </Box>
               <Box mb={2}>
@@ -104,7 +111,7 @@ const FormUser = () => {
                   fullWidth
                   required
                   name="pwd"
-                  value={formData.pwd} // Updated to match state
+                  value={formData.pwd}
                   onChange={handleInputChange}
                   placeholder="Your Password"
                 />
@@ -117,7 +124,7 @@ const FormUser = () => {
                   fullWidth
                   required
                   name="rePwd"
-                  value={formData.rePwd} // Updated to match state
+                  value={formData.rePwd}
                   onChange={handleInputChange}
                   placeholder="Your Password Again"
                 />
@@ -128,6 +135,11 @@ const FormUser = () => {
                   label="I agree to the Terms and Conditions"
                 />
               </Box>
+              {errorMessage && (
+                <Typography color="error" variant="body2" sx={{ mb: 2 }}>
+                  {errorMessage}
+                </Typography>
+              )}
               <Button
                 variant="contained"
                 color="primary"
@@ -138,8 +150,8 @@ const FormUser = () => {
                 Submit
               </Button>
             </form>
-          </Grid2>
-        </Grid2>
+          </Box>
+        </Box>
       </Container>
     </div>
   );

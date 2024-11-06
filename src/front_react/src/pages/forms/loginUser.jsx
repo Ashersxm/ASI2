@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, fetchUserDetails, logout } from '../../app/authSlice'; // Adjust the import based on your file structure
+import { loginUser, fetchUserDetails, logout } from '../../app/userSlice';
 import Header from '../Header';
-import { useRouter } from 'next/router';
 
 const LoginUser = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const { error, success, userId, isLoggedIn } = useSelector((state) => state.auth);
+  const { error, success, userId, isLoggedIn, user } = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
     login: '',
@@ -29,25 +27,27 @@ const LoginUser = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logout()); // Clear user state
+    dispatch(logout());
   };
 
   useEffect(() => {
     if (success && userId) {
       dispatch(fetchUserDetails(userId));
     }
-
-    if (error) {
-      console.error(error);
-    }
-  }, [success, error, userId, dispatch]);
+  }, [success, userId, dispatch]);
 
   return (
     <Box sx={{ padding: 3 }}>
       <Header />
       <Typography variant="subtitle1" sx={{ marginBottom: 2 }}>
-        User Login
+        {isLoggedIn ? `Vous êtes déja connecté, ${user?.login || 'User'}!` : 'User Login'}
       </Typography>
+
+      {error && (
+        <Typography color="error" variant="body2" sx={{ marginBottom: 2 }}>
+          {error}
+        </Typography>
+      )}
 
       {isLoggedIn ? (
         <Button 

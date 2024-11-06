@@ -13,7 +13,7 @@ const persistConfig = {
 // Combine your reducers using combineReducers
 const rootReducer = combineReducers({
   user: userReducer,
-  auth: authReducer,
+  // auth: authReducer,
 });
 
 // Create the persisted reducer
