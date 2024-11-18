@@ -3,6 +3,15 @@ dist
 dist-ssr
 *.local
 
+/target/
+.metadata/
+.settings/
+.project
+.code
+.classpath
+*.iml
+**/.idea/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
