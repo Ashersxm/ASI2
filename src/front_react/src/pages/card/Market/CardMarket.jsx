@@ -44,7 +44,7 @@ const CardMarket = ({ type, cards, action }) => {
         <Grid item xs={4}> {/* Colonne pour l'affichage de la carte sélectionnée */}
           {selectedCard && (
             <Box mt={3}>
-              <CardDisplay card={selectedCard} action={action} type/> {/* Affichage de la carte sélectionnée */}
+              <CardDisplay card={selectedCard} action={action} type={type}/> {/* Affichage de la carte sélectionnée */}
             </Box>
           )}
         </Grid>

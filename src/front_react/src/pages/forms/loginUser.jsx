@@ -31,10 +31,11 @@ const LoginUser = () => {
   };
 
   useEffect(() => {
-    if (success && userId) {
+    if (userId && success) {
+      console.log(userId)
       dispatch(fetchUserDetails(userId));
     }
-  }, [success, userId, dispatch]);
+  }, [userId, success,dispatch]);
 
   return (
     <Box sx={{ padding: 3 }}>

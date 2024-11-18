@@ -2,19 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Thunk for logging in the user
-export const loginUser = createAsyncThunk('user/loginUser', async (credentials, { dispatch }) => {
-  const response = await axios.post('http://localhost:8083/auth', credentials);
-  const { token, userId } = response.data;
-  
-
-  
-  return { token, userId }; // Returning the token and userId for localStorage and state management
-});
+export const loginUser = createAsyncThunk(
+  'user/loginUser',
+  async (credentials, { dispatch }) => {
+    // Make the API call to login
+    const response = await axios.post('http://localhost:8083/auth', credentials);    
+    return response.data;
+  }
+);
 
 // Thunk for registering a new user
 export const registerUser = createAsyncThunk('user/registerUser', async (userData) => {
   const response = await axios.post('http://localhost:8083/user', userData);
-  return response.data; // Assuming response contains new user data
+  return response.data;
 });
 
 // Thunk for fetching user details
@@ -23,14 +23,20 @@ export const fetchUserDetails = createAsyncThunk('user/fetchUserDetails', async 
   return response.data; // This should include user details
 });
 
+// Thunk to fetch all users
+export const getAllUsers = createAsyncThunk('user/getAllUsers', async () => {
+  const response = await axios.get('http://localhost:8083/users'); // Adjust the URL if needed
+  return response.data;
+});
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
-    users: [], // For storing registered users
+    users: [],
     userId: null,
     token: null,
-    isLoggedIn: false, // Track if the user is logged in
+    isLoggedIn: false,
     error: null,
     success: false,
   },
@@ -51,15 +57,12 @@ const userSlice = createSlice({
     builder
       // Handle login actions
       .addCase(loginUser.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.success = true;
         state.isLoggedIn = true;
+        state.userId = action.payload;
         state.error = null;
-        const { token, userId } = action.payload;
-        state.token = token;
-        state.userId = userId;
-        fetchUserDetails(userId);
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', userId);
+        localStorage.setItem('userId', action.payload);
       })
       .addCase(loginUser.rejected, (state) => {
         state.isLoggedIn = false;
@@ -85,6 +88,17 @@ const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.error.message;
         state.success = false;
+      })
+
+      // Handle fetching all users
+      .addCase(getAllUsers.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.users = action.payload;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.error = 'Failed to fetch users.';
       });
   },
 });
