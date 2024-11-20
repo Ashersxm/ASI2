@@ -4,8 +4,11 @@ import AddIcon from '@mui/icons-material/Add';
 import PersonIcon from '@mui/icons-material/Person';
 import MoneyIcon from '@mui/icons-material/Money';
 import HomeIcon from '@mui/icons-material/Home';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const { user, isLoggedIn } = useSelector((state) => state.user);
+
   return (
     <div className="header-container">
       {/* AppBar for header */}
@@ -35,12 +38,20 @@ const Header = () => {
 
               {/* Username and Balance */}
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mx: 1 }}>
-                <Typography variant="body1">
-                  Default UserName
-                </Typography>
-                <Typography variant="subtitle2">
-                  9999$
-                </Typography>
+                {isLoggedIn ? (
+                  <>
+                    <Typography variant="body1">
+                      {user?.surName} {user?.lastName}
+                    </Typography>
+                    <Typography variant="subtitle2">
+                      9999$
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography variant="body1">
+                    Default UserName
+                  </Typography>
+                )}
               </Box>
 
               <IconButton color="inherit" href="/forms/loginUser">

@@ -1,5 +1,7 @@
 // src/pages/CardGenerator.jsx
-import React, { useState } from 'react';
+import React, { useState ,  useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { Box, Button, TextField, Typography, Grid, Card, CardContent, CardMedia, Checkbox, FormControlLabel } from '@mui/material';
 import Header
  from '../Header';
@@ -8,7 +10,20 @@ const CardGenerator = () => {
   const [descriptionPrompt, setDescriptionPrompt] = useState('');
   const [termsAgreed, setTermsAgreed] = useState(false);
   const [generatedCards, setGeneratedCards] = useState([]);
+  const router = useRouter();
+  const user = useSelector((state) => state.user.user);
 
+  useEffect(() => {
+    console.log("USERRR",user)
+    if (!user) {
+      router.push('/forms/loginUser');
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return <p>Loading...</p>;
+  }
+  
   const handleGenerate = () => {
     if (termsAgreed) {
       // Logique pour générer une carte

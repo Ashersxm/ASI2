@@ -4,7 +4,7 @@ import CardRow from './CardRow';
 import CardDisplay from './CardDisplay'; // Import du composant d'affichage de la carte
 import Header from '@/pages/Header';
 
-const CardMarket = ({ type, cards }) => {
+const CardMarket = ({ type, cards, action }) => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   const handleRowClick = (card) => {
@@ -20,9 +20,11 @@ const CardMarket = ({ type, cards }) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Card Name</TableCell>
-                  <TableCell>Description</TableCell>
+                <TableCell>Icon</TableCell>
+                <TableCell>Card Name</TableCell>
+                <TableCell>Description</TableCell>
                   <TableCell>Family</TableCell>
+                  <TableCell>Affinity</TableCell>
                   <TableCell>HP</TableCell>
                   <TableCell>Energy</TableCell>
                   <TableCell>Defense</TableCell>
@@ -42,7 +44,7 @@ const CardMarket = ({ type, cards }) => {
         <Grid item xs={4}> {/* Colonne pour l'affichage de la carte sélectionnée */}
           {selectedCard && (
             <Box mt={3}>
-              <CardDisplay card={selectedCard} /> {/* Affichage de la carte sélectionnée */}
+              <CardDisplay card={selectedCard} action={action} type={type}/> {/* Affichage de la carte sélectionnée */}
             </Box>
           )}
         </Grid>

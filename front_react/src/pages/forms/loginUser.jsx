@@ -1,55 +1,101 @@
-// src/pages/LoginUser.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, fetchUserDetails, logout } from '../../app/userSlice';
 import Header from '../Header';
 
 const LoginUser = () => {
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Logique de connexion ici
-    console.log('Login process initiated');
+  const dispatch = useDispatch();
+  const { error, success, userId, isLoggedIn, user } = useSelector((state) => state.user);
+
+  const [formData, setFormData] = useState({
+    login: '',
+    pwd: '',
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await dispatch(loginUser(formData));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  useEffect(() => {
+    if (userId && success) {
+      console.log(userId)
+      dispatch(fetchUserDetails(userId));
+    }
+  }, [userId, success,dispatch]);
 
   return (
     <Box sx={{ padding: 3 }}>
-      <Header></Header>
-
+      <Header />
       <Typography variant="subtitle1" sx={{ marginBottom: 2 }}>
-        Add an user
+        {isLoggedIn ? `Vous êtes déja connecté, ${user?.login || 'User'}!` : 'User Login'}
       </Typography>
 
-      {/* Formulaire de connexion */}
-      <form onSubmit={handleLogin}>
-        <Box sx={{ marginBottom: 2 }}>
-          <TextField 
-            fullWidth 
-            label="First Name" 
-            name="login" 
-            placeholder="Login" 
-            variant="outlined" 
-            required 
-          />
-        </Box>
-        <Box sx={{ marginBottom: 2 }}>
-          <TextField 
-            fullWidth 
-            label="Password" 
-            type="password" 
-            name="password" 
-            placeholder="Your Password" 
-            variant="outlined" 
-            required 
-          />
-        </Box>
+      {error && (
+        <Typography color="error" variant="body2" sx={{ marginBottom: 2 }}>
+          {error}
+        </Typography>
+      )}
+
+      {isLoggedIn ? (
         <Button 
-          type="submit" 
           variant="contained" 
-          color="primary" 
+          color="secondary" 
           fullWidth
+          onClick={handleLogout}
         >
-          Login
+          Logout
         </Button>
-      </form>
+      ) : (
+        <form onSubmit={handleLogin}>
+          <Box sx={{ marginBottom: 2 }}>
+            <TextField 
+              fullWidth 
+              label="Login" 
+              name="login" 
+              placeholder="Your Login" 
+              variant="outlined" 
+              required 
+              value={formData.login}
+              onChange={handleInputChange}
+            />
+          </Box>
+          <Box sx={{ marginBottom: 2 }}>
+            <TextField 
+              fullWidth 
+              label="Password" 
+              type="password" 
+              name="pwd" 
+              placeholder="Your Password" 
+              variant="outlined" 
+              required 
+              value={formData.pwd}
+              onChange={handleInputChange}
+            />
+          </Box>
+          <Button 
+            type="submit" 
+            variant="contained" 
+            color="primary" 
+            fullWidth
+          >
+            Login
+          </Button>
+        </form>
+      )}
     </Box>
   );
 };
