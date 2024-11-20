@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/v1/images")
+@CrossOrigin(origins = "*") // Permettre toutes les origines
 public class ImageGenerationController {
 
     @Autowired

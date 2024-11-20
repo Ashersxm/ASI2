@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux'; // Import combineReducers
 import userReducer from './userSlice';
 import cardReducer from './cardSlice';
+import generationReducer from './generationSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
@@ -14,6 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   cards: cardReducer,
+  generation :generationReducer
 });
 
 // Create the persisted reducer
