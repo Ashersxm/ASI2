@@ -23,6 +23,4 @@ public class CardMngMonolithicApplication {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-
-
 }

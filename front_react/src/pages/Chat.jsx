@@ -72,7 +72,7 @@ const Chat = ({ username }) => {
           <Typography variant="subtitle1">Utilisateurs connectés</Typography>
           <List>
           {users
-            .filter((user) => socket && user.id !== socket.id) // Filtre pour exclure l'utilisateur actuel
+            .filter((user) => socket && user.id !== socket.id)
             .map((user) => (
               <ListItem
                 key={user.id}
