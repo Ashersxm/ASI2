@@ -7,8 +7,8 @@ const Chat = ({ username }) => {
   const [socket, setSocket] = useState(null);
   const [messageHistory, setMessageHistory] = useState([]);
   const [message, setMessage] = useState('');
-  const [users, setUsers] = useState({});
-  const [roomName, setRoomName] = useState(null); // `null` pour la salle générale
+  const [users, setUsers] = useState([]);
+  const [roomName, setRoomName] = useState(null); // `null` pour le chat général
 
   useEffect(() => {
     // Connectez-vous au serveur Socket.IO
@@ -71,17 +71,18 @@ const Chat = ({ username }) => {
         <div style={{ flex: 1, marginRight: '10px' }}>
           <Typography variant="subtitle1">Utilisateurs connectés</Typography>
           <List>
-            {Object.entries(users).map(([id, user]) => (
+          {users
+            .filter((user) => socket && user.id !== socket.id) // Filtre pour exclure l'utilisateur actuel
+            .map((user) => (
               <ListItem
-                key={id}
+                key={user.id}
                 button
-                disabled={id === socket.id} // Désactive le bouton pour soi-même
-                onClick={() => joinRoom(id)}
+                onClick={() => joinRoom(user.id)}
               >
-                <ListItemText primary={user} />
+                <ListItemText primary={user.username} />
               </ListItem>
             ))}
-          </List>
+        </List>
         </div>
         <div style={{ flex: 3 }}>
           <Typography variant="subtitle1">

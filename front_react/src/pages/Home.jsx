@@ -16,11 +16,11 @@ const Home = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  console.log(users); // Logs the list of users once they are fetched
+  //console.log(users); // Logs the list of users once they are fetched
 
   const user = useSelector(state => state.user);
   console.log(user);
- 
+
   return (
     <div>
       <Header />
