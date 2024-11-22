@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import cpe.service.ImageGenerationService;
 import cpe.service.BusService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ImageGenerationController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/sendmsg/{busName}")
     public boolean sendInform(@RequestBody ImageRequest imageRequest, @PathVariable String busName) {
-        busService.sendMsg(imageRequest.getPromptTxt(), imageRequest.getNegativePromptTxt(),busName);
+        busService.sendMsgBus(imageRequest.getPromptTxt(), imageRequest.getNegativePromptTxt(),busName);
         return true;
     }
 
@@ -49,5 +50,15 @@ public class ImageGenerationController {
     public List<ImageRequest> sendInform() {
         return requestDao.getAllRequest();
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/users")
+    public List<RequestDao> getAllUsers() {
+        List<RequestDao> uDTOList = new ArrayList<>();
+        for (UserModel uM : userService.getAllUsers()) {
+            uDTOList.add(DTOMapper.fromUserModelToUserDTO(uM));
+        }
+        return uDTOList;
+    }
+
 
 }
