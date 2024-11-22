@@ -43,6 +43,7 @@ public class UserModel implements Serializable {
 		this.lastName="lastname_default";
 		this.surName="surname_default";
 		this.email="email_default";
+		this.account=10000;
 	}
 
 	public UserModel(String login, String pwd) {
@@ -52,6 +53,7 @@ public class UserModel implements Serializable {
 		this.lastName="lastname_default";
 		this.surName="surname_default";
 		this.email="email_default";
+		this.account=10000;
 	}
 
 	public UserModel(UserDTO user) {
