@@ -33,10 +33,9 @@ const Chat = ({ username }) => {
       setMessageHistory((prev) => [...prev, data]);
     });
 
-    // Recevez la confirmation d'avoir rejoint une salle
-    newSocket.on('roomJoined', ({ roomName }) => {
+    newSocket.on('roomJoined', ({ roomName, history }) => {
       setRoomName(roomName);
-      setMessageHistory([]);
+      setMessageHistory(history || []);
     });
 
     return () => newSocket.close();
