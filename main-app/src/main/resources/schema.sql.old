@@ -24,5 +24,6 @@ CREATE TABLE `CARDMODEL` (
 	`defence` FLOAT,
 	`attack` FLOAT,
 	`price` FLOAT,
+	`userId` Integer,
 	PRIMARY KEY (`id`)
 );

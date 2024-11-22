@@ -53,6 +53,7 @@ public class UserService {
 	}
 
 	public UserDTO addUser(UserDTO user) {
+		user.setAccount(10000); //10000 credit à
 		UserModel u = fromUDtoToUModel(user);
 		// needed to avoid detached entity passed to persist error
 		UserModel u_saved=userRepository.save(u);

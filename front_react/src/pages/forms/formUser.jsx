@@ -1,50 +1,85 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, TextField, Button, Checkbox, FormControlLabel, Container, Box } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../app/userSlice'; // Adjust the import based on your file structure
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  Container,
+  TextField,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  Snackbar,
+  Alert,
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../app/userSlice'; // Adjust the import path as needed
 import Header from '../Header';
 
 const FormUser = () => {
   const dispatch = useDispatch();
-  const [termsChecked, setTermsChecked] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  
+  const { success, error } = useSelector((state) => state.user);
+
   const [formData, setFormData] = useState({
     login: '',
     surName: '',
     lastName: '',
     pwd: '',
     rePwd: '',
-    email: ''
+    email: '',
   });
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); // 'success', 'error'
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleCheckboxChange = (event) => {
     setTermsChecked(event.target.checked);
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.login) errors.login = 'Login is required.';
+    if (!formData.surName) errors.surName = 'Surname is required.';
+    if (!formData.lastName) errors.lastName = 'Last name is required.';
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      errors.email = 'Please enter a valid email.';
+    if (!formData.pwd || formData.pwd.length < 6)
+      errors.pwd = 'Password must be at least 6 characters.';
+    if (formData.pwd !== formData.rePwd)
+      errors.rePwd = 'Passwords do not match.';
+    if (!termsChecked) errors.terms = 'You must agree to the terms and conditions.';
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (formData.pwd !== formData.rePwd) {
-      setErrorMessage('Passwords do not match.');
-      return;
-    }
-    if (!termsChecked) {
-      setErrorMessage('Please agree to the terms and conditions.');
-      return;
-    }
 
-    // Clear error message and dispatch registration action
-    setErrorMessage('');
+    if (!validateForm()) return;
+
     dispatch(registerUser(formData));
-    console.log('Form submitted!', formData);
+  };
+
+  useEffect(() => {
+    if (success) {
+      setSnackbarMessage('User created successfully!');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
+    } else if (error) {
+      setSnackbarMessage(`Error: ${error}`);
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+    }
+  }, [success, error]);
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -63,7 +98,8 @@ const FormUser = () => {
                   name="login"
                   value={formData.login}
                   onChange={handleInputChange}
-                  placeholder="Login"
+                  error={!!formErrors.login}
+                  helperText={formErrors.login}
                 />
               </Box>
               <Box mb={2}>
@@ -75,7 +111,8 @@ const FormUser = () => {
                   name="surName"
                   value={formData.surName}
                   onChange={handleInputChange}
-                  placeholder="Surname"
+                  error={!!formErrors.surName}
+                  helperText={formErrors.surName}
                 />
               </Box>
               <Box mb={2}>
@@ -87,7 +124,8 @@ const FormUser = () => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
-                  placeholder="Last Name"
+                  error={!!formErrors.lastName}
+                  helperText={formErrors.lastName}
                 />
               </Box>
               <Box mb={2}>
@@ -99,8 +137,8 @@ const FormUser = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Your Email"
-                  type="email"
+                  error={!!formErrors.email}
+                  helperText={formErrors.email}
                 />
               </Box>
               <Box mb={2}>
@@ -113,7 +151,8 @@ const FormUser = () => {
                   name="pwd"
                   value={formData.pwd}
                   onChange={handleInputChange}
-                  placeholder="Your Password"
+                  error={!!formErrors.pwd}
+                  helperText={formErrors.pwd}
                 />
               </Box>
               <Box mb={2}>
@@ -126,7 +165,8 @@ const FormUser = () => {
                   name="rePwd"
                   value={formData.rePwd}
                   onChange={handleInputChange}
-                  placeholder="Your Password Again"
+                  error={!!formErrors.rePwd}
+                  helperText={formErrors.rePwd}
                 />
               </Box>
               <Box mb={2}>
@@ -134,25 +174,30 @@ const FormUser = () => {
                   control={<Checkbox checked={termsChecked} onChange={handleCheckboxChange} />}
                   label="I agree to the Terms and Conditions"
                 />
+                {formErrors.terms && (
+                  <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+                    {formErrors.terms}
+                  </Typography>
+                )}
               </Box>
-              {errorMessage && (
-                <Typography color="error" variant="body2" sx={{ mb: 2 }}>
-                  {errorMessage}
-                </Typography>
-              )}
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                type="submit"
-                disabled={!termsChecked}
-              >
+              <Button variant="contained" color="primary" fullWidth type="submit">
                 Submit
               </Button>
             </form>
           </Box>
         </Box>
       </Container>
+
+      {/* Snackbar for feedback */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

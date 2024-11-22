@@ -44,7 +44,7 @@ const Header = () => {
                       {user?.surName} {user?.lastName}
                     </Typography>
                     <Typography variant="subtitle2">
-                      9999$
+                    {user?.account}$
                     </Typography>
                   </>
                 ) : (

@@ -19,6 +19,7 @@ public class DTOMapper {
 		cm.setAttack(cD.getAttack());
 		cm.setPrice(cD.getPrice());
 		cm.setId(cD.getId());
+		//cm.setUser(/* trouver user avec cD.getUserI */); //Comment faire pour 
 		return cm;
 	}
 	

@@ -1,21 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { Box, Button, TextField, Typography, Grid, Card, CardContent, CardMedia, Checkbox, FormControlLabel } from '@mui/material';
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Checkbox,
+  FormControlLabel,
+  Alert,
+} from '@mui/material';
 import Header from '../Header';
 import { generateProperty, generateImage } from '../../app/generationSlice';
-import { saveCard } from '@/app/cardSlice';
+import { saveCard, resetCardSaved, clearSuccess } from '@/app/cardSlice';
 
 const CardGenerator = () => {
   const [imagePrompt, setImagePrompt] = useState('');
   const [descriptionPrompt, setDescriptionPrompt] = useState('');
   const [termsAgreed, setTermsAgreed] = useState(false);
-  const [cardSaved, setCardSaved] = useState(false); // Nouvel état pour éviter les sauvegardes multiples
+  const [showSaveSuccess, setShowSaveSuccess] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => state.user.user);
-  const { property, image, loading, error } = useSelector((state) => state.generation);
+  const {
+    property,
+    image,
+    loadingImage,
+    loadingProperty,
+    error,
+  } = useSelector((state) => state.generation);
+  const { success, isCardSaved, loading: saveLoading } = useSelector((state) => state.cards);
 
   useEffect(() => {
     if (!user) {
@@ -23,11 +42,20 @@ const CardGenerator = () => {
     }
   }, [user, router]);
 
-  // Sauvegarder la carte seulement si elle n'a pas déjà été enregistrée
-  useEffect(() => {
-    if (property && image && !cardSaved) {
+  const handleGenerate = () => {
+    if (termsAgreed) {
+      dispatch(resetCardSaved()); // Reset saved state for a new generation
+      dispatch(generateProperty(descriptionPrompt));
+      dispatch(generateImage(imagePrompt));
+    } else {
+      alert('You must agree to the terms and conditions.');
+    }
+  };
+
+  const handleSave = () => {
+    if (property && image && user) {
       const cardData = {
-        name: 'test',
+        name: 'Generated Card',
         description: property.response,
         family: 'test',
         affinity: 'test',
@@ -38,26 +66,27 @@ const CardGenerator = () => {
         defence: 0,
         attack: 0,
         price: 0,
-        userId: user.id || 0,
+        userId: user?.id,
       };
-
       dispatch(saveCard(cardData));
-      setCardSaved(true); // Marquer la carte comme sauvegardée
-    }
-  }, [property, image, dispatch, user, cardSaved]);
-
-  const handleGenerate = () => {
-    if (termsAgreed) {
-      setCardSaved(false); // Réinitialiser l'état lors d'une nouvelle génération
-      dispatch(generateProperty(descriptionPrompt));
-      dispatch(generateImage(imagePrompt));
-    } else {
-      alert('You must agree to the terms and conditions.');
+      setShowSaveSuccess(true); // Show the success message
     }
   };
 
+  useEffect(() => {
+    if (showSaveSuccess && success) {
+      const timer = setTimeout(() => {
+        setShowSaveSuccess(false); // Hide success message after 3 seconds
+        dispatch(clearSuccess()); // Clear success message from Redux
+      }, 3000);
+      return () => clearTimeout(timer); // Cleanup timer
+    }
+  }, [showSaveSuccess, success, dispatch]);
+
+  const canSave = property && image && !loadingImage && !loadingProperty; // Vérification avant activation du bouton "Save"
+
   if (!user) {
-    return <p>Loading...</p>;
+    return <p>Redirecting to login...</p>;
   }
 
   return (
@@ -92,14 +121,36 @@ const CardGenerator = () => {
             label="I agree to the Terms and Conditions"
           />
 
-          <Button variant="contained" onClick={handleGenerate} disabled={loading}>
-            {loading ? 'Generating...' : 'Generate'}
+          <Button
+            variant="contained"
+            onClick={handleGenerate}
+            disabled={loadingImage || loadingProperty}
+            sx={{ marginRight: 2 }}
+          >
+            {(loadingImage || loadingProperty) ? 'Generating...' : 'Generate'}
           </Button>
+
+          {property && image && (
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleSave}
+              disabled={!canSave || isCardSaved || saveLoading} // Bloque tant que les deux n'ont pas chargé
+            >
+              {saveLoading ? 'Saving...' : isCardSaved ? 'Saved' : 'Save'}
+            </Button>
+          )}
 
           {error && (
             <Typography color="error" align="center" sx={{ marginTop: 2 }}>
               {typeof error === 'object' ? error.message || JSON.stringify(error) : error}
             </Typography>
+          )}
+
+          {showSaveSuccess && success && (
+            <Alert severity="success" sx={{ marginTop: 2 }}>
+              {success}
+            </Alert>
           )}
         </Grid>
         <Grid item xs={3} />
@@ -119,7 +170,6 @@ const CardGenerator = () => {
               )}
 
               <CardContent>
-                <Typography variant="h6">Generated Property</Typography>
                 <Typography variant="body2">{property.response}</Typography>
               </CardContent>
             </Card>

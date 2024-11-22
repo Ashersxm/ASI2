@@ -14,7 +14,7 @@ const CardDisplay = ({ card, action, type }) => {
       <CardMedia
         component="img"
         height="140"
-        image={card.imgUrl} // Remplace avec le chemin de l'image de la carte
+        image={`http://localhost:8080${card.imgUrl.replace('/static', '')}`}
         alt={card.name}
       />
       <CardContent>

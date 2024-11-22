@@ -7,7 +7,7 @@ const CardRow = ({ card, onClick }) => {
       <CardMedia
         component="img"
         sx={{ width: 50, height: 50, objectFit: 'cover' }} // "cover" pour garder les proportions de l'image
-        image={card.smallImgUrl} // Remplace avec le chemin de l'image de la carte
+        image={`http://localhost:8080${card.smallImgUrl.replace('/static', '')}`}
         alt={card.name}
       />
       <TableCell>{card.name}</TableCell>

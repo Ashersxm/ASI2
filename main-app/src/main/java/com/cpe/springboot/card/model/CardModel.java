@@ -113,5 +113,4 @@ public class CardModel extends CardBasics{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 }
