@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
+
 @RestController
 @RequestMapping("/api/v1/properties")
+@CrossOrigin(origins = "*") // Permettre toutes les origines
 public class PropertyGenerationController {
 
     @Autowired
