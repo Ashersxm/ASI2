@@ -18,6 +18,8 @@ Activités Réalisées Lors des Séances (par personne)
 
 -   MS Image Generation
 -   MS Property Generation
+-   MS matchmaking
+-   MS game service
 
 ### BUC
 
@@ -32,6 +34,7 @@ Activités Réalisées Lors des Séances (par personne)
 
 -   MS User
 -   MS Auth
+-   MS chat
 
 Lien vers le Dépôt Git
 ----------------------
