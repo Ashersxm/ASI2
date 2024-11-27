@@ -1,0 +1,14 @@
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616 # URL de votre broker ActiveMQ
+    user: admin
+    password: admin
+
+logging:
+  file:
+    name: logs/activemq-messages.log # Chemin du fichier de logs
+  level:
+    root: INFO
+
+server:
+  port: 9784
