@@ -13,6 +13,7 @@ app.use(express.json());
 // Intégration des routes
 app.post('/api/v1/select-cards', gameController.selectCards);
 app.post('/api/v1/end-turn', gameController.endTurn);
+app.post('/api/v1/play-turn', gameController.playTurn);
 
 // Gestion des sockets
 io.on('connection', (socket) => {
@@ -25,7 +26,7 @@ io.on('connection', (socket) => {
 });
 
 // Lancer le serveur
-const PORT = 3000;
+const PORT = 9783;
 server.listen(PORT, () => {
     console.log(`Game service running on http://localhost:${PORT}`);
 });

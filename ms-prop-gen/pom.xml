@@ -33,7 +33,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>de.androidpit</groupId>
+            <artifactId>colorToproperties</artifactId>
+            <version>1.1.2</version>
+        </dependency>
         <!-- H2 Database for testing -->
         <dependency>
             <groupId>com.h2database</groupId>
