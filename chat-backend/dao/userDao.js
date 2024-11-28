@@ -13,6 +13,10 @@ module.exports = {
     return Object.values(users);
   },
 
+  getUserBySocketId: (socketId) => {
+    return users[socketId] || null;
+  },
+
   getUsernameBySocketId: (socketId) => {
     return users[socketId] ? users[socketId].username : null;
   },

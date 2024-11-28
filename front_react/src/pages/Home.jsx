@@ -6,7 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SellIcon from '@mui/icons-material/Sell';
 import ScienceIcon from '@mui/icons-material/Science';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers } from '../app/userSlice'; // Ajustez le chemin si nécessaire
+import { getAllUsers } from '../app/userSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Home = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  console.log(users); // Logs the list of users once they are fetched
+  console.log(users);
 
   const user = useSelector(state => state.user);
   console.log(user);
@@ -27,7 +27,7 @@ const Home = () => {
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Grid container spacing={2}>
           {/* Colonne de gauche pour le Chat */}
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={5}>
             <Box
               sx={{
                 border: '1px solid #e0e0e0',
@@ -42,7 +42,7 @@ const Home = () => {
           </Grid>
 
           {/* Colonne de droite pour le contenu principal */}
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={7}>
             <Grid container spacing={4}>
               {/* Sell Button */}
               <Grid item xs={12} sm={6} md={4}>

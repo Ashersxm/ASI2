@@ -1,4 +1,3 @@
-// Chat.js
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { TextField, Button, List, ListItem, ListItemText, Typography, Divider } from '@mui/material';
@@ -11,7 +10,6 @@ const Chat = ({ username }) => {
   const [roomName, setRoomName] = useState(null); // `null` pour le chat général
 
   useEffect(() => {
-    // Connectez-vous au serveur Socket.IO
     const newSocket = io('http://localhost:3001');
     setSocket(newSocket);
 
@@ -33,6 +31,7 @@ const Chat = ({ username }) => {
       setMessageHistory((prev) => [...prev, data]);
     });
 
+    // Recevez la confirmation d'avoir rejoint une salle
     newSocket.on('roomJoined', ({ roomName, history }) => {
       setRoomName(roomName);
       setMessageHistory(history || []);
@@ -81,7 +80,7 @@ const Chat = ({ username }) => {
                 <ListItemText primary={user.username} />
               </ListItem>
             ))}
-        </List>
+          </List>
         </div>
         <div style={{ flex: 3 }}>
           <Typography variant="subtitle1">

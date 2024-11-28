@@ -14,7 +14,7 @@ module.exports = {
         timestamp,
       });
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde du message général:', error);
+      console.error('Erreur lors de la sauvegarde du message général:', error.response ? error.response.data : error.message);
     }
   },
 
@@ -24,7 +24,7 @@ module.exports = {
       const response = await axios.get(`${SPRING_API_URL}/room/general`);
       return response.data;
     } catch (error) {
-      console.error('Erreur lors de la récupération de l\'historique du chat général:', error);
+      console.error('Erreur lors de la récupération de l\'historique du chat général:', error.response ? error.response.data : error.message);
       return [];
     }
   },
@@ -40,7 +40,7 @@ module.exports = {
         timestamp,
       });
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde du message privé:', error);
+      console.error('Erreur lors de la sauvegarde du message privé:', error.response ? error.response.data : error.message);
     }
   },
 
@@ -50,7 +50,7 @@ module.exports = {
       const response = await axios.get(`${SPRING_API_URL}/room/${roomName}`);
       return response.data;
     } catch (error) {
-      console.error(`Erreur lors de la récupération de l'historique du chat privé (${roomName}):`, error);
+      console.error(`Erreur lors de la récupération de l'historique du chat privé (${roomName}):`, error.response ? error.response.data : error.message);
       return [];
     }
   },

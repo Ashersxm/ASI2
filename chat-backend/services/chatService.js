@@ -12,7 +12,17 @@ module.exports = {
   },
 
   joinRoom: async (socket, targetUserId) => {
-    const roomName = [socket.id, targetUserId].sort().join('_');
+    const currentUser = await userDao.getUserBySocketId(socket.id);
+    const targetUser = await userDao.getUserBySocketId(targetUserId);
+
+    if (!currentUser || !targetUser) {
+      console.error('Utilisateur non trouvé lors de la jonction de la room privée');
+      return;
+    }
+
+    const sortedUsernames = [currentUser.username, targetUser.username].sort();
+    const roomName = sortedUsernames.join('_');
+
     socket.leave('general');
     socket.join(roomName);
 
@@ -22,12 +32,13 @@ module.exports = {
 
   sendMessage: async (socket, io, { roomName, sender, message, timestamp }) => {
     if (roomName) {
-      //chat prive
+      // Chat privé
       io.to(roomName).emit('receiveMessage', { sender, message, timestamp });
-      const participantIds = roomName.split('_');
-      const receiverSocketId = participantIds.find(id => id !== socket.id);
-      const receiver = await userDao.getUsernameBySocketId(receiverSocketId);
-      
+
+      // roomName est de la forme 'alice_bob'
+      const sortedUsernames = roomName.split('_');
+      const receiver = sortedUsernames.find(username => username !== sender);
+
       await messageDao.savePrivateMessage({
         roomName,
         sender,
