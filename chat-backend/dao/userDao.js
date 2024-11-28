@@ -1,17 +1,19 @@
-const User = require('../models/userModel');
-
-let users = {};
+let users = {}; // Structure : { socketId: { id, username } }
 
 module.exports = {
-  addUser: (id, username) => {
-    users[id] = new User(id, username);
+  addUser: (socketId, username) => {
+    users[socketId] = { id: socketId, username };
   },
 
-  removeUser: (id) => {
-    delete users[id];
+  removeUser: (socketId) => {
+    delete users[socketId];
   },
 
   getAllUsers: () => {
     return Object.values(users);
+  },
+
+  getUsernameBySocketId: (socketId) => {
+    return users[socketId] ? users[socketId].username : null;
   },
 };
