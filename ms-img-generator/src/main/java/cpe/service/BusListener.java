@@ -1,13 +1,20 @@
 package cpe.service;
 
 import cpe.model.RequestDao;
-import cpe.model.ImageRequest;
+import cpe.model.ImageModel;
 import jakarta.jms.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import cpe.config.*;
+import cpe.controller.*;
+import cpe.model.*;
+
 
 @Service
 public class BusListener {
@@ -18,21 +25,22 @@ public class BusListener {
     @Autowired
     private RequestDao requestDao;
 
-    @JmsListener(destination = "RESULT_BUS_MNG", containerFactory = "connectionFactory")
-    public void receiveMessageResult(ImageRequest request, Message message) {
+    // Structure de données partagée pour stocker les messages reçus par canal ESB
+    private static final ConcurrentHashMap<String, ConcurrentLinkedQueue<ImageModel>> receivedMessages = new ConcurrentHashMap<>();
+
+    @JmsListener(destination = "RESULT_BUS_MNG", containerFactory = "jmsListenerContainerFactory")
+    public void receiveMessageResult(ImageModel request, Message message) {
         System.out.println("[BUSLISTENER] [CHANNEL RESULT_BUS_MNG] RECEIVED MSG=[" + request + "]");
         requestDao.addRequest(request);
+        receivedMessages.computeIfAbsent("RESULT_BUS_MNG", k -> new ConcurrentLinkedQueue<>()).add(request);
     }
 
-    @JmsListener(destination = "A", containerFactory = "connectionFactory")
-    public void receiveMessageA(ImageRequest request, Message message) {
-        System.out.println("[BUSLISTENER] [CHANNEL A] RECEIVED MSG=[" + request + "]");
-        requestDao.addRequest(request);
+    public static ImageModel getLastReceivedMessage(String busName) {
+        ConcurrentLinkedQueue<ImageModel> queue = receivedMessages.get(busName);
+        return (queue != null) ? queue.poll() : null;
     }
 
-    @JmsListener(destination = "B", containerFactory = "connectionFactory")
-    public void receiveMessageB(ImageRequest request, Message message) {
-        System.out.println("[BUSLISTENER] [CHANNEL B] RECEIVED MSG=[" + request + "]");
-        requestDao.addRequest(request);
+    public static ConcurrentLinkedQueue<ImageModel> getMessagesForBus(String busName) {
+        return receivedMessages.getOrDefault(busName, new ConcurrentLinkedQueue<>());
     }
 }

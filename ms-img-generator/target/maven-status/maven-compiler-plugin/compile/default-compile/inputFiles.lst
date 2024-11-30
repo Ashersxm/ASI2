@@ -1,6 +1,8 @@
 /mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/ImgGeneratorMain.java
-/mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/controller/ImageGenerationController.java
-/mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/model/ImageRequest.java
+/mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/config/JmsConfig.java
+/mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/config/RestTemplateConfig.java
+/mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/controller/ImageController.java
+/mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/model/ImageModel.java
 /mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/model/RequestDao.java
 /mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/service/BusListener.java
 /mnt/c/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator/src/main/java/cpe/service/BusService.java

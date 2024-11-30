@@ -1,14 +1,16 @@
 package cpe.service;
 
-import cpe.model.ImageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+
+import cpe.config.*;
+import cpe.controller.*;
+import cpe.model.*;
 
 @Service
 public class ImageGenerationService {

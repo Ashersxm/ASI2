@@ -1,25 +1,24 @@
 package cpe.model;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+import cpe.config.*;
+import cpe.controller.*;
+import cpe.service.*;
+
+@Repository
 public class RequestDao {
 
-    private final List<ImageRequest> requestList;
+    private List<ImageModel> requests = new ArrayList<>();
 
-    public RequestDao(){
-        this.requestList=new ArrayList<>();
+    public void addRequest(ImageModel request) {
+        requests.add(request);
     }
 
-    public void addRequest(ImageRequest request){
-        this.requestList.add(request);
+    public List<ImageModel> getRequests() {
+        return requests;
     }
-
-    public List<ImageRequest> getAllRequest(){
-        return this.requestList;
-    }
-
 }

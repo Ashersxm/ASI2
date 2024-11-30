@@ -21,14 +21,19 @@
     </properties>
 
     <dependencies>
+        <!-- Spring Boot Starter Data JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
+        <!-- Spring Boot Starter Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Spring Boot Starter ActiveMQ -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
@@ -41,34 +46,33 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- JOOQ for SQL building -->
-        <!--   <dependency>
-               <groupId>org.jooq</groupId>
-               <artifactId>jooq</artifactId>
-               <version>3.18.0</version>
-           </dependency> -->
-
-           <!-- Spring Boot Starter Test for testing dependencies -->
+        <!-- Spring Boot Starter Test for testing dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- Swagger UI for API documentation -->
-        <!-- <dependency>
-             <groupId>org.springdoc</groupId>
-             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-             <version>2.0.2</version>
-         </dependency> -->
-     </dependencies>
+        <!-- Spring Boot Starter RestTemplate for HTTP requests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
 
-     <build>
-         <plugins>
-             <plugin>
-                 <groupId>org.springframework.boot</groupId>
-                 <artifactId>spring-boot-maven-plugin</artifactId>
-             </plugin>
-         </plugins>
-     </build>
- </project>
+        <!-- Swagger UI for API documentation (optional) -->
+        <!-- <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.2</version>
+        </dependency> -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

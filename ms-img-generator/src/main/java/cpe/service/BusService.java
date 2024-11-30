@@ -1,8 +1,13 @@
 package cpe.service;
 
+import cpe.model.ImageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+
+import cpe.config.*;
+import cpe.controller.*;
+import cpe.model.*;
 
 @Service
 public class BusService {
@@ -15,12 +20,13 @@ public class BusService {
     }
 
     public void sendMsg(String promptTxt, String negativePromptTxt) {
-        System.out.println("[BUSSERVICE] SEND String MSG=["+promptTxt+negativePromptTxt+"]");
-        jmsTemplate.convertAndSend("test",promptTxt+negativePromptTxt);
+        System.out.println("[BUSSERVICE] SEND String MSG=[" + promptTxt + negativePromptTxt + "]");
+        jmsTemplate.convertAndSend("test", promptTxt + negativePromptTxt);
     }
 
     public void sendMsgBus(String promptTxt, String negativePromptTxt, String busName) {
-        System.out.println("[BUSSERVICE] SEND String MSG=["+promptTxt+negativePromptTxt+"] to Bus=["+busName+"]");
-        jmsTemplate.convertAndSend(busName,promptTxt+negativePromptTxt);
+        ImageModel imageModel = new ImageModel(promptTxt, negativePromptTxt);
+        System.out.println("[BUSSERVICE] SEND ImageModel MSG=[" + imageModel + "] to Bus=[" + busName + "]");
+        jmsTemplate.convertAndSend(busName, imageModel);
     }
 }

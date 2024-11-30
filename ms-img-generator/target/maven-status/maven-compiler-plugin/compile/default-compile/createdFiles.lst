@@ -1,7 +1,9 @@
+cpe/config/JmsConfig.class
 cpe/service/BusService.class
 cpe/ImgGeneratorMain.class
-cpe/controller/ImageGenerationController.class
-cpe/model/ImageRequest.class
 cpe/service/BusListener.class
+cpe/controller/ImageController.class
+cpe/model/ImageModel.class
 cpe/model/RequestDao.class
+cpe/config/RestTemplateConfig.class
 cpe/service/ImageGenerationService.class
