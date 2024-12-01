@@ -55,11 +55,17 @@ Liste des Éléments Réalisés
 
 -   **MS AUTH & MS USER** : Réalisés et testés.
 -   **Frontend** : Réalisés sans intéractions avec le backend.
--   **MS ImageGeneration & MS PropertyGeneration** : Réalisés et testés.
+-   **MS ImageGeneration** : Réalisé et testé.
+-   **MS text generation** : fonctionnel.
 -   **ESB** : Réalisés et testés.
+-   **Proxy** : non testé.
+-   **Logger** : non testé.
 
 Liste des Éléments Non-réalisés
 -------------------------------
 
 -   **MS Notification** : Réalisé mais à tester avec ESB
+-   **MS PropertyGeneration** : non fonctionnel
+-   **Docker + CI/CD**
+
 
