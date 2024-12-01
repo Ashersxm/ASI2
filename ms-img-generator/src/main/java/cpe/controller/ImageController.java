@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import cpe.config.*;
-import cpe.model.*;
-import cpe.service.*;
-
 @RestController
 @RequestMapping("/api/messages")
 public class ImageController {
@@ -30,6 +26,9 @@ public class ImageController {
 
     @Autowired
     private RequestDao requestDao;
+
+    @Autowired
+    private BusListener busListener;
 
     @PostMapping("/send")
     public String sendMessage(@RequestBody ImageModel imageModel) {
@@ -66,5 +65,20 @@ public class ImageController {
     public ResponseEntity<List<ImageModel>> readMessages(@RequestParam String busName) {
         ConcurrentLinkedQueue<ImageModel> messages = BusListener.getMessagesForBus(busName);
         return ResponseEntity.ok(List.copyOf(messages));
+    }
+
+    @GetMapping("/displayMessages")
+    public String displayMessages(@RequestParam String busName) {
+        busListener.displayMessagesInQueue(busName);
+        return "Messages displayed for bus: " + busName;
+    }
+
+    @GetMapping("/getFirstMessage")
+    public ResponseEntity<ImageModel> getFirstMessage(@RequestParam String busName) {
+        ImageModel firstMessage = BusListener.getLastReceivedMessage(busName);
+//        if (firstMessage == null) {
+//            return ResponseEntity.badRequest().body((ImageModel) Map.of("error", "No message received for bus: " + busName));
+//        }
+        return ResponseEntity.ok(firstMessage);
     }
 }

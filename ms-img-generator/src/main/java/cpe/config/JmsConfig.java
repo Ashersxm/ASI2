@@ -1,5 +1,6 @@
 package cpe.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ public class JmsConfig {
     public JmsTemplate jmsTemplate(){
         JmsTemplate template = new JmsTemplate();
         template.setConnectionFactory(connectionFactory());
+        template.setMessageConverter(jacksonJmsMessageConverter());
         return template;
     }
 
@@ -32,6 +34,7 @@ public class JmsConfig {
     public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory());
+        factory.setMessageConverter(jacksonJmsMessageConverter());
         return factory;
     }
 
@@ -42,5 +45,4 @@ public class JmsConfig {
         converter.setTypeIdPropertyName("_type");
         return converter;
     }
-
 }

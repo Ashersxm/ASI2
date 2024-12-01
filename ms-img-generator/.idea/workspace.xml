@@ -5,32 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ab809f7-592c-4e41-bdf9-32ef1d090b7b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cpe/config/JmsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cpe/config/RestTemplateConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cpe/controller/ImageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/ImgGeneratorMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/ImgGeneratorMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/controller/ImageGenerationController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/model/ImageRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/model/ImageModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/model/RequestDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/model/RequestDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/config/JmsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/config/JmsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/controller/ImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/controller/ImageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cpe/service/BusListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/service/BusListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/service/BusService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/service/BusService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cpe/service/ImageGenerationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cpe/service/ImageGenerationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/MSproj-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/MSproj-1.0-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/MSproj-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/MSproj-1.0-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cpe/ImgGeneratorMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpe/ImgGeneratorMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cpe/controller/ImageGenerationController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cpe/model/ImageRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cpe/model/RequestDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpe/model/RequestDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cpe/config/JmsConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpe/config/JmsConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/cpe/controller/ImageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpe/controller/ImageController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/cpe/service/BusListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpe/service/BusListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cpe/service/BusService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpe/service/BusService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/cpe/service/ImageGenerationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/cpe/service/ImageGenerationService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,16 +42,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ImgGeneratorMain.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "esbImageFinal",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ImgGeneratorMain.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;esbImageFinal&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/julie/Desktop/S9/Famework_FrontEnd/Projet/ASI2/ms-img-generator&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
