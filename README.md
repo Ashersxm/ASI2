@@ -18,23 +18,31 @@ Activités Réalisées Lors des Séances (par personne)
 
 -   MS Image Generation
 -   MS Property Generation
+-   MS Text Generation
 -   MS matchmaking
 -   MS game service
+-   MS proxy
+-   MS logger
+-   Diagramme de séquences lors d'un jeu entre deux joueurs
+-   Déploiement docker
 
 ### BUC
 
 -   MS Notification
 -   ESB
+-   Tableau récapitulatif des bus de communication
 
 ### JOBARD
 
--   Frontend
+-   Frontend Atelier 1
+-   Tableau comparatif des frameworks FrontEnd
 
 ### LOUEDEC
 
 -   MS User
 -   MS Auth
--   MS chat
+-   MS chat + historique
+-   Schéma d'architecture de la nouvelle application
 
 Lien vers le Dépôt Git
 ----------------------
