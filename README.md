@@ -24,7 +24,6 @@ Activités Réalisées Lors des Séances (par personne)
 -   MS proxy
 -   MS logger
 -   Diagramme de séquences lors d'un jeu entre deux joueurs
--   Déploiement docker
 
 ### BUC
 
